@@ -11,10 +11,13 @@ import UIKit
 class HomeTableViewController: UITableViewController {
     var tweetArray = [NSDictionary]()
     var tweetAmount: Int!//"!" means we don't have to set value just yet
+    let myRefreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         loadTweets()//Needs to be called here to be used
+        myRefreshControl.addTarget(self, action: #selector(loadTweets), for: .valueChanged)//Upon pulling to refresh, reloads to update if new tweets were posted
+        tableView.refreshControl = myRefreshControl//Sets myRefreshControl to the tableview's refresh control
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -23,20 +26,46 @@ class HomeTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-    func loadTweets() {
+    @objc func loadTweets() {
+        tweetAmount = 20
         let url = "https://api.twitter.com/1.1/statuses/home_timeline.json"
-        let myParams = ["count": 10]//Creates a parameter for the amount of tweets to pull by a value, in this case 10
+        let myParams = ["count": tweetAmount]//Creates a parameter for the amount of tweets to pull by a value, in this case 10
         
-        TwitterAPICaller.client?.getDictionariesRequest(url: url, parameters: myParams, success: { (tweets: [NSDictionary]) in//"tweets" reffers to the values of NSDictionary
+        TwitterAPICaller.client?.getDictionariesRequest(url: url, parameters: myParams as [String : Any], success: { (tweets: [NSDictionary]) in//"tweets" reffers to the values of NSDictionary
             
             self.tweetArray.removeAll()//Empties array to pull most accurate/recent tweets
             for tweet in tweets {//"tweet" is a value of "tweets"
                 self.tweetArray.append(tweet)//Adds a tweet to the tweetArray; writing inside a closure is why "self" is required
             }
             self.tableView.reloadData()//Add this to make sure data is updated
+            self.myRefreshControl.endRefreshing()//Must include to end continuous refresh
         }, failure: { (Error) in
             print("Could not retrieve tweets! oof")
         })//"Dictionaries" pulls multiple tweets, while "Dictionary" will only pull 1
+    }
+    
+    func loadMoreTweets(){
+        let url = "https://api.twitter.com/1.1/statuses/home_timeline.json"
+        let myParams = ["count": tweetAmount]
+        tweetAmount += 20//Adds more tweets on top of current amount of tweets (increments of a value, in this case 20)
+        
+        TwitterAPICaller.client?.getDictionariesRequest(url: url, parameters: myParams as [String : Any], success: { (tweets: [NSDictionary]) in//"tweets" reffers to the values of NSDictionary
+            
+            self.tweetArray.removeAll()
+            for tweet in tweets {
+                self.tweetArray.append(tweet)
+            }
+            self.tableView.reloadData()
+            self.myRefreshControl.endRefreshing()
+        }, failure: { (Error) in
+            print("Could not retrieve tweets! oof")
+        })
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {//When user gets to end to tableview, "loadMoreTweets" is called
+        if indexPath.row + 1 == tweetArray.count{
+            loadMoreTweets()
+        }
     }
     
     @IBAction func logout(_ sender: Any) {

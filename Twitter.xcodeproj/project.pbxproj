@@ -78,9 +78,9 @@
 			children = (
 				6EBCF52521DF07FC00451C03 /* AppDelegate.swift */,
 				6EBCF54321E047A500451C03 /* TwitterAPICaller.swift */,
+				8B28CB6A23FA61D7008D87EA /* TweetCell.swift */,
 				8B28CB6823FA2C9E008D87EA /* HomeTableViewController.swift */,
 				8B28CB6623FA1E95008D87EA /* LoginViewController.swift */,
-				8B28CB6A23FA61D7008D87EA /* TweetCell.swift */,
 				6EBCF52921DF07FC00451C03 /* Main.storyboard */,
 				6EBCF54D21E71F9400451C03 /* Launch Screen.storyboard */,
 				37D29B8521F90E3400984A88 /* Assets.xcassets */,

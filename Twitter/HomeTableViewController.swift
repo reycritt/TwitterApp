@@ -10,12 +10,13 @@ import UIKit
 
 class HomeTableViewController: UITableViewController {
     var tweetArray = [NSDictionary]()
+    var timeArray = [NSDictionary]()//A test/experiment
     var tweetAmount: Int!//"!" means we don't have to set value just yet
     let myRefreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadTweets()//Needs to be called here to be used
+        //loadTweets()//Needs to be called here to be used
         myRefreshControl.addTarget(self, action: #selector(loadTweets), for: .valueChanged)//Upon pulling to refresh, reloads to update if new tweets were posted
         tableView.refreshControl = myRefreshControl//Sets myRefreshControl to the tableview's refresh control
 
@@ -24,6 +25,11 @@ class HomeTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {//This method is called every single time this view (HomeTableViewController) appears on screen
+        super.viewDidAppear(animated)
+        loadTweets()
     }
     
     @objc func loadTweets() {
@@ -77,9 +83,12 @@ class HomeTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell//Names the cell; as TweetCell allows used of TweetCell's outlets
         let user = tweetArray[indexPath.row]["user"] as! NSDictionary
+        //let time = timeArray[indexPath.row]["created_at"] as! NSDictionary
         
         cell.profileLabel.text = user["name"] as? String//Finds key "name" under "user" key "user"
+        cell.timeLabel.text = user["created_at"] as? String
         cell.tweetLabel.text = tweetArray[indexPath.row]["text"] as? String//Sets the tweetLabel to the value stored in the array under "text"
+        
         
         let imageUrl = URL(string: (user["profile_image_url_https"] as? String)!)//Takes the image URL from API
         let data = try? Data(contentsOf: imageUrl!)//Attempts to set data to the image

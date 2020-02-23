@@ -80,6 +80,7 @@
 			children = (
 				6EBCF52521DF07FC00451C03 /* AppDelegate.swift */,
 				6EBCF54321E047A500451C03 /* TwitterAPICaller.swift */,
+				8B28CB6A23FA61D7008D87EA /* TweetCell.swift */,
 				8B28CB6823FA2C9E008D87EA /* HomeTableViewController.swift */,
 				8B28CB6623FA1E95008D87EA /* LoginViewController.swift */,
 				8B18D5BF2401F7A100C4F3CF /* TweetViewController.swift */,

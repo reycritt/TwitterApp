@@ -19,6 +19,8 @@ class HomeTableViewController: UITableViewController {
         //loadTweets()//Needs to be called here to be used
         myRefreshControl.addTarget(self, action: #selector(loadTweets), for: .valueChanged)//Upon pulling to refresh, reloads to update if new tweets were posted
         tableView.refreshControl = myRefreshControl//Sets myRefreshControl to the tableview's refresh control
+        self.tableView.rowHeight = UITableView.automaticDimension//Auto sets table/cell to height based on contents
+        self.tableView.estimatedRowHeight = 150//Row height is set to 150; if there are more words, autoDimension adds extra space
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -95,6 +97,10 @@ class HomeTableViewController: UITableViewController {
         if let imageData = data{
             cell.profileView.image = UIImage(data: imageData)
         }
+        
+        cell.setFavorited(tweetArray[indexPath.row]["favorited"] as! Bool)
+        cell.tweetId = tweetArray[indexPath.row]["id"] as! Int
+        cell.setRetweeted(tweetArray[indexPath.row]["retweeted"] as! Bool)
         
         return cell
     }

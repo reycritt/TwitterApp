@@ -140,7 +140,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Sample tweet" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="LVF-t7-oYI">
-                                <rect key="frame" x="16" y="44" width="343" height="130"/>
+                                <rect key="frame" x="16" y="54" width="343" height="130"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="k2T-we-3JW"/>
@@ -149,10 +149,17 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Characters: 0/140" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dsJ-kL-3Mj" userLabel="Character Count">
+                                <rect key="frame" x="199" y="192" width="138" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="LVF-t7-oYI" firstAttribute="top" secondItem="i3A-Pl-Vkc" secondAttribute="top" id="O60-z4-mrh"/>
+                            <constraint firstItem="LVF-t7-oYI" firstAttribute="top" secondItem="i3A-Pl-Vkc" secondAttribute="top" constant="10" id="O60-z4-mrh"/>
                             <constraint firstItem="LVF-t7-oYI" firstAttribute="leading" secondItem="i3A-Pl-Vkc" secondAttribute="leading" constant="16" id="mQQ-6d-wgJ"/>
                             <constraint firstItem="i3A-Pl-Vkc" firstAttribute="trailing" secondItem="LVF-t7-oYI" secondAttribute="trailing" constant="16" id="rMK-YA-EDb"/>
                         </constraints>
@@ -173,6 +180,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="charCountLabel" destination="dsJ-kL-3Mj" id="5kg-cF-jbe"/>
                         <outlet property="tweetTextView" destination="LVF-t7-oYI" id="Gvp-CP-FYL"/>
                     </connections>
                 </viewController>
